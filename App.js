@@ -17,7 +17,7 @@ export default function App() {
   let screen = <StartGameScreen onConfirm={pickedNumHandler} />;
 
   if (userNum) {
-    screen = <GameScreen />;
+    screen = <GameScreen pickedNumber={userNum} />;
   }
 
   return (
