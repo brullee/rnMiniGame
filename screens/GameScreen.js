@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 
 import Title from "../components/ui/Title";
 import NumberContainer from "../components/game/NumberContainer";
@@ -15,9 +15,29 @@ function generateRandomNumber(min, max, exclude) {
   }
 }
 
-function GameScreen({ userNum }) {
-  const initialGuess = generateRandomNumber(0, 100, userNum);
+function GameScreen({ pickedNumber }) {
+  let minBoundary = 1;
+  let maxBoundary = 100;
+
+  const initialGuess = generateRandomNumber(minBoundary, maxBoundary, pickedNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+
+  function nextGuessHandler(direction){
+    if ((direction === 'lower' && currentGuess < pickedNumber) || (direction === 'greater' && currentGuess > pickedNumber)){
+      Alert.alert("HEY!", 'no cheating!! >:(', [{text: 'Sorry', style: "cancel"}]);
+      return;
+    }
+    else if(direction === 'lower'){
+      maxBoundary = currentGuess;
+
+    }
+    else {
+      minBoundary = currentGuess + 1;
+    }
+    const newRandNum = generateRandomNumber(minBoundary, maxBoundary, currentGuess);
+    setCurrentGuess(newRandNum);
+  }
+
 
   return (
     <View style={styles.screen}>
@@ -27,10 +47,10 @@ function GameScreen({ userNum }) {
         <Text>Higher or Lower?</Text>
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
-            <PrimaryButton>Lower</PrimaryButton>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>-</PrimaryButton>
           </View>
           <View style={styles.buttonContainer}>
-            <PrimaryButton>Higher</PrimaryButton>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'greater')}>+</PrimaryButton>
           </View>
         </View>
       </View>
