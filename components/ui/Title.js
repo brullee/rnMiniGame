@@ -1,23 +1,30 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import Colors from "../../src/constants/Colors";
 
 function Title({ children }) {
-  return <Text style={styles.title}>{children}</Text>;
+  return (
+    <View style={styles.titleFrame}>
+      <Text style={styles.titleText}>{children}</Text>
+    </View>
+  );
 }
 
 export default Title;
 
 const styles = StyleSheet.create({
-  title: {
+  titleText: {
+    fontFamily: "open-sans-bold",
     fontSize: 24,
-    fontWeight: "bold",
-    color: Colors.accent500,
+    // fontWeight: "bold",
+    color: Colors.primary500,
     textAlign: "center",
-    // borderWidth: 2,
-    // borderRadius: 4,
-    // borderColor: Colors.accent500,
     padding: 12,
-    paddingTop: 25,
+  },
+  titleFrame: {
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: Colors.accent500,
+    backgroundColor: Colors.accent500,
   },
 });

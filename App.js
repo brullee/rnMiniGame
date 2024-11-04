@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { useFonts } from "expo-font";
+import AppLoading from "expo-app-loading";
 
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
@@ -13,24 +15,32 @@ export default function App() {
   const [userNum, setUserNum] = useState();
   const [gameIsOver, setGameIsOver] = useState(true);
 
-  function pickedNumHandler(pickedNum) {
-    setUserNum(pickedNum);
-    setGameIsOver(false); 
+  const [fontsLoaded] = useFonts({
+    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+  });
 
+  if (!fontsLoaded) {
+    return <AppLoading />;
   }
 
-  function gameOverHandler(){
+  function pickedNumHandler(pickedNum) {
+    setUserNum(pickedNum);
+    setGameIsOver(false);
+  }
+
+  function gameOverHandler() {
     setGameIsOver(true);
   }
 
   let screen = <StartGameScreen onConfirm={pickedNumHandler} />;
 
   if (userNum) {
-    screen = <GameScreen pickedNumber={userNum} onGameOver={gameOverHandler}/>;
+    screen = <GameScreen pickedNumber={userNum} onGameOver={gameOverHandler} />;
   }
 
-  if (gameIsOver && userNum){
-    screen = <GameOverScreen/>;
+  if (gameIsOver && userNum) {
+    screen = <GameOverScreen />;
   }
 
   return (
@@ -44,7 +54,9 @@ export default function App() {
         style={styles.rootScreen}
         imageStyle={styles.backgroundImage}
       >
-        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
+        <SafeAreaProvider style={styles.rootScreen}>
+          <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
+        </SafeAreaProvider>
       </ImageBackground>
     </LinearGradient>
   );
