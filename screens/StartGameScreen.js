@@ -2,6 +2,8 @@ import { useState } from "react";
 import { TextInput, View, StyleSheet, Alert } from "react-native";
 
 import PrimaryButton from "../components/ui/PrimaryButton";
+import Title from "../components/ui/Title";
+
 import Colors from "../src/constants/Colors";
 
 function StartGameScreen({ onConfirm }) {
@@ -29,22 +31,25 @@ function StartGameScreen({ onConfirm }) {
   }
 
   return (
-    <View style={styles.inpuitContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        autoCapitalize="none"
-        autoCorrect={false}
-        onChangeText={numInputHandler}
-        value={enteredNum}
-      />
-      <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={resetNumHandler}>Reset</PrimaryButton>
-        </View>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={confirmNumHandler}>Confirm</PrimaryButton>
+    <View style={styles.rootContainer}>
+      <Title>Enter a Number !!</Title>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChangeText={numInputHandler}
+          value={enteredNum}
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={resetNumHandler}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={confirmNumHandler}>Confirm</PrimaryButton>
+          </View>
         </View>
       </View>
     </View>
@@ -54,9 +59,14 @@ function StartGameScreen({ onConfirm }) {
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
-  inpuitContainer: {
-    // flex: 1,
+  rootContainer:{
+    flex: 1,
     marginTop: 100,
+    alignItems: "center"
+  },
+  inputContainer: {
+    // flex: 1,
+    marginTop: 36,
     marginHorizontal: 24,
     padding: 16,
     justifyContent: "center",

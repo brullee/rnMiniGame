@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 
 import Title from "../components/ui/Title";
@@ -15,26 +15,36 @@ function generateRandomNumber(min, max, exclude) {
   }
 }
 
-function GameScreen({ pickedNumber }) {
-  let minBoundary = 1;
-  let maxBoundary = 100;
+function GameScreen({ pickedNumber, onGameOver }) {
+  const [minBoundary, setMinBoundary] = useState(1);
+  const [maxBoundary, setMaxBoundary] = useState(100);
 
-  const initialGuess = generateRandomNumber(minBoundary, maxBoundary, pickedNumber);
+  const initialGuess = generateRandomNumber(0, 100, pickedNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
+  useEffect(() =>{
+    if(currentGuess === pickedNumber){
+      onGameOver();
+    }
+  }, [currentGuess, pickedNumber, onGameOver]);
+
   function nextGuessHandler(direction){
+    let updatedMinValue = minBoundary;
+    let updatedMaxValue = maxBoundary;  
+
     if ((direction === 'lower' && currentGuess < pickedNumber) || (direction === 'greater' && currentGuess > pickedNumber)){
       Alert.alert("HEY!", 'no cheating!! >:(', [{text: 'Sorry', style: "cancel"}]);
       return;
     }
     else if(direction === 'lower'){
-      maxBoundary = currentGuess;
-
+      updatedMaxValue = currentGuess;
+      setMaxBoundary(currentGuess);
     }
     else {
-      minBoundary = currentGuess + 1;
+      updatedMinValue = currentGuess + 1;
+      setMinBoundary(currentGuess + 1);
     }
-    const newRandNum = generateRandomNumber(minBoundary, maxBoundary, currentGuess);
+    const newRandNum = generateRandomNumber(updatedMinValue, updatedMaxValue, currentGuess);
     setCurrentGuess(newRandNum);
   }
 
