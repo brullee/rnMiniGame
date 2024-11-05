@@ -67,16 +67,13 @@ function GameScreen({ pickedNumber, onGameOver }) {
           Higher or Lower?
         </InstructionText>
         <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
-              <Ionicons name="arrow-down" size={24} />
-            </PrimaryButton>
-          </View>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
-              <Ionicons name="arrow-up" size={24} />
-            </PrimaryButton>
-          </View>
+          <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+            <Ionicons name="arrow-down" size={24} />
+          </PrimaryButton>
+
+          <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
+            <Ionicons name="arrow-up" size={24} />
+          </PrimaryButton>
         </View>
       </Card>
     </View>
@@ -92,9 +89,6 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-  },
-  buttonContainer: {
-    flex: 1,
   },
   instructionText: {
     marginBottom: 12,

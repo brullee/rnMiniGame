@@ -3,17 +3,19 @@ import Colors from "../../src/constants/Colors";
 
 function PrimaryButton({ children, onPress }) {
   return (
-    <View style={styles.OuterContainer}>
-      <Pressable
-        style={({ pressed }) =>
-          pressed
-            ? [styles.pressed, styles.InnerContainer]
-            : styles.InnerContainer
-        }
-        onPress={onPress}
-      >
-        <Text style={styles.buttonText}>{children}</Text>
-      </Pressable>
+    <View style={styles.buttonContainer}>
+      <View style={styles.OuterContainer}>
+        <Pressable
+          style={({ pressed }) =>
+            pressed
+              ? [styles.pressed, styles.InnerContainer]
+              : styles.InnerContainer
+          }
+          onPress={onPress}
+        >
+          <Text style={styles.buttonText}>{children}</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -38,5 +40,8 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.75,
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });

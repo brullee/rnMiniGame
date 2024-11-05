@@ -47,12 +47,8 @@ function StartGameScreen({ onConfirm }) {
           value={enteredNum}
         />
         <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={resetNumHandler}>Reset</PrimaryButton>
-          </View>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={confirmNumHandler}>Confirm</PrimaryButton>
-          </View>
+          <PrimaryButton onPress={resetNumHandler}>Reset</PrimaryButton>
+          <PrimaryButton onPress={confirmNumHandler}>Confirm</PrimaryButton>
         </View>
       </Card>
     </View>
@@ -80,8 +76,5 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-  },
-  buttonContainer: {
-    flex: 1,
   },
 });
