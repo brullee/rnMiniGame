@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import NumberContainer from "../components/game/NumberContainer";
@@ -7,6 +7,8 @@ import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
+
+import GuessLogItem from "../components/game/GuessLogItem";
 
 function generateRandomNumber(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -24,12 +26,20 @@ function GameScreen({ pickedNumber, onGameOver }) {
 
   const initialGuess = generateRandomNumber(1, 100, pickedNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [guessRounds, setGuessRounds] = useState([initialGuess]);
+
+  const guessRoundListLength = guessRounds.length;
 
   useEffect(() => {
     if (currentGuess === pickedNumber) {
-      onGameOver();
+      onGameOver(guessRounds.length);
     }
   }, [currentGuess, pickedNumber, onGameOver]);
+
+  useEffect(() => {
+    setMinBoundary(1);
+    setMaxBoundary(100);
+  }, []);
 
   function nextGuessHandler(direction) {
     let updatedMinValue = minBoundary;
@@ -56,6 +66,7 @@ function GameScreen({ pickedNumber, onGameOver }) {
       currentGuess
     );
     setCurrentGuess(newRandNum);
+    setGuessRounds((prevGuessRounds) => [newRandNum, ...prevGuessRounds]);
   }
 
   return (
@@ -76,6 +87,21 @@ function GameScreen({ pickedNumber, onGameOver }) {
           </PrimaryButton>
         </View>
       </Card>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={guessRounds}
+          renderItem={(itemData) => {
+            return (
+              <GuessLogItem
+                roundNum={guessRoundListLength - itemData.index}
+                guess={itemData.item}
+              />
+            );
+          }}
+          keyExtractor={(item) => item}
+          alwaysBounceVertical={false}
+        />
+      </View>
     </View>
   );
 }
@@ -92,5 +118,9 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     marginBottom: 12,
+  },
+  listContainer: {
+    flex: 1,
+    paddingTop: 16,
   },
 });
