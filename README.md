@@ -25,6 +25,6 @@ While building this game, I learned and revisited the following React Native con
 - **Keyboard Management**: Implementing `KeyboardAvoidingView` to handle the keyboard properly, ensuring it doesn’t overlap important UI elements
 - **Nested Styling**: Sending custom styles through props in custom components, enabling nested styling for flexible component design
 - **Min/Max Styling Values**: Setting minimum and maximum values for certain styles to maintain consistent layouts across different screen sizes
-- **Platform-Specific Code**: Learned to write targeted code for iOS and Android using two approaches: the **Platform API** for conditional logic within components, and platform-specific files (e.g., `Title.ios.js` and `Title.android.js`) to separate code for each platform without needing conditional statements.
+- **Platform-Specific Code**: Learned to write platform-specific files (e.g., `Title.ios.js` and `Title.android.js`) to separate code for each platform without needing conditional statements.
 
 This project helped me reinforce key concepts in React Native and further improved my understanding of state management, and handling user interactions.
